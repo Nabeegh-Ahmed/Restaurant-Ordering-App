@@ -1,12 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { getFetch, httpBatchLink, loggerLink } from "@trpc/client";
 import { trpc } from "./trpc";
 
 function AppContent() {
-  const hello = trpc.sayHello.useQuery();
-  return <main className="p-2">{hello.data?.message}</main>;
+  
+  const registerUser = trpc.loginUser.useMutation()
+  const getUser = trpc.getMe.useQuery()
+  useEffect(() => {
+    registerUser.mutate({
+      email: "nabeegh08@gmail.com",
+      password: "12345678@Nn"
+    })
+    // registerUser.mutate({
+    //   name: "Nabeegh Ahmed",
+    //   email: "nabeegh08@gmail.com",
+    //   password: "12345678@Nn",
+    //   passwordConfirm: "12345678@Nn",
+    //   photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlysovRqSseA4uUGlio_vESy9xFc5OS7jXOva3NlE&s"
+    // })
+
+
+  }, [])
+
+  return <div> {
+      getUser.isLoading ? "Loading..." : getUser.data?.data.user?.name
+    } </div>
+
 }
 
 function App() {
