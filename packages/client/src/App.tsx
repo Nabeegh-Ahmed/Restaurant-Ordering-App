@@ -5,7 +5,7 @@ import { getFetch, httpBatchLink, loggerLink } from "@trpc/client";
 import { trpc } from "./trpc";
 
 function AppContent() {
-  
+
   const registerUser = trpc.loginUser.useMutation()
   const getUser = trpc.getMe.useQuery()
   useEffect(() => {
@@ -20,13 +20,11 @@ function AppContent() {
     //   passwordConfirm: "12345678@Nn",
     //   photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlysovRqSseA4uUGlio_vESy9xFc5OS7jXOva3NlE&s"
     // })
-
-
   }, [])
 
   return <div> {
-      getUser.isLoading ? "Loading..." : getUser.data?.data.user?.name
-    } </div>
+    getUser.isLoading ? "Loading..." : getUser.data?.data.user?.name
+  } </div>
 
 }
 
