@@ -11,6 +11,7 @@ export const getMeHandler = ({ ctx }: { ctx: Context }) => {
       },
     };
   } catch (err: any) {
+    console.log(err)
     throw new TRPCError({
       code: 'INTERNAL_SERVER_ERROR',
       message: err.message,

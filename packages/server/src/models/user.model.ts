@@ -4,23 +4,23 @@ import {
     modelOptions,
     pre,
     prop,
+    Ref,
 } from '@typegoose/typegoose';
 import bcrypt from 'bcryptjs';
+import { Restaurant } from './restaurant.model';
 
 @index({ email: 1 })
 @pre<User>('save', async function () {
     // Hash password if the password is new or was updated
     if (!this.isModified('password')) return;
-
     // Hash password with costFactor of 12
     this.password = await bcrypt.hash(this.password, 12);
 })
 
 @modelOptions({
     schemaOptions: {
-        // Add createdAt and updatedAt fields
         timestamps: true,
-    },
+    }
 })
 
 // Export the User class to be used as TypeScript type
@@ -39,6 +39,9 @@ export class User {
 
     @prop({ required: true })
     photo: string;
+
+    @prop({ ref: 'Restaurant', default: [], type: [Restaurant], foreignField: 'owner', localField: '_id' })
+    collections: Ref<Restaurant>[]
 
     // Instance method to check if passwords match
     async comparePasswords(hashedPassword: string, candidatePassword: string) {

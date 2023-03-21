@@ -5,14 +5,26 @@ import { getFetch, httpBatchLink, loggerLink } from "@trpc/client";
 import { trpc } from "./trpc";
 
 function AppContent() {
+  const createRestaurant = trpc.createRestaurant.useMutation();
 
-  const registerUser = trpc.loginUser.useMutation()
-  const getUser = trpc.getMe.useQuery()
-  useEffect(() => {
-    registerUser.mutate({
-      email: "nabeegh08@gmail.com",
-      password: "12345678@Nn"
+
+  const createRestaurantController = () => {
+    createRestaurant.mutate({
+      name: "Pearl Continental",
+      username: "pearlcontinental2",
+      description: "Hey"
     })
+  }
+  const registerUser = trpc.loginUser.useMutation()
+
+  const rest = trpc.getRestaurant.useQuery({
+    id: "64134e1b75b9fc446058b828"
+  })
+
+  const user = trpc.getMe.useQuery()
+
+  useEffect(() => {
+    
     // registerUser.mutate({
     //   name: "Nabeegh Ahmed",
     //   email: "nabeegh08@gmail.com",
@@ -22,9 +34,17 @@ function AppContent() {
     // })
   }, [])
 
-  return <div> {
-    getUser.isLoading ? "Loading..." : getUser.data?.data.user?.name
-  } </div>
+  return (
+    <div>
+      { createRestaurant.isLoading && <p>Loading...</p> }
+      { createRestaurant.error && <p>{createRestaurant.error.message}</p> }
+      { createRestaurant.isSuccess && createRestaurant.data.data.restaurant.name }
+      {/* { JSON.stringify(rest.data?.data.restaurant) } */}
+      { user.error?.message }
+      { JSON.stringify(user.data?.data.user) }
+      <button onClick={createRestaurantController}>Create Restaurant</button>
+    </div>
+  )
 
 }
 

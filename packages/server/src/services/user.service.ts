@@ -17,7 +17,7 @@ export const createUser = async (input: Partial<User>) => {
 
 // Find User by Id
 export const findUserById = async (id: string) => {
-  return await userModel.findById(id).lean();
+  return await userModel.findById(id).lean()
 };
 
 // Find All users
@@ -47,8 +47,11 @@ export const signToken = async (user: DocumentType<User>) => {
     expiresIn: `${customConfig.refreshTokenExpiresIn}d`,
   });
 
+  const redisUser = { ...user } as Partial<User>;
+  delete redisUser.password;
+
   // Create a Session
-  redisClient.set(userId, JSON.stringify(user), {
+  redisClient.set(userId, JSON.stringify(redisUser), {
     EX: 60 * 60,
   });
   
