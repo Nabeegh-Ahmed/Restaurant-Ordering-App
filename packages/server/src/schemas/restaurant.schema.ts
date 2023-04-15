@@ -2,7 +2,6 @@ import { number, object, string, TypeOf } from 'zod';
 
 export const createRestaurantSchema = object({
     name: string({ required_error: 'Name is required' }),
-    username: string({ required_error: "Collection description is required" }),
     description: string({ required_error: "Description is required" }),
     gallery: string().array().optional(),
 })

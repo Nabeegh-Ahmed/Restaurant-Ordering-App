@@ -39,11 +39,12 @@ export const registerHandler = async ({
   input: CreateUserInput;
 }) => {
   try {
+
     const user = await createUser({
       email: input.email,
       name: input.name,
       password: input.password,
-      photo: input.photo,
+      photo: input.photo ?? "https://ionicframework.com/docs/demos/api/avatar/avatar.svg",
     });
 
     return {
@@ -53,10 +54,12 @@ export const registerHandler = async ({
       },
     };
   } catch (err: any) {
+    console.log(err)
     if (err.code === 11000) {
+      
       throw new TRPCError({
-        code: 'CONFLICT',
-        message: 'Email already exists',
+        code: 'BAD_REQUEST',
+        message: 'Email already exists'
       });
     }
     throw err;

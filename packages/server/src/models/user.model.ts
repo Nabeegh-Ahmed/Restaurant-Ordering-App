@@ -7,7 +7,6 @@ import {
     Ref,
 } from '@typegoose/typegoose';
 import bcrypt from 'bcryptjs';
-import { Restaurant } from './restaurant.model';
 
 @index({ email: 1 })
 @pre<User>('save', async function () {
@@ -39,9 +38,6 @@ export class User {
 
     @prop({ required: true })
     photo: string;
-
-    @prop({ ref: 'Restaurant', default: [], type: [Restaurant], foreignField: 'owner', localField: '_id' })
-    collections: Ref<Restaurant>[]
 
     // Instance method to check if passwords match
     async comparePasswords(hashedPassword: string, candidatePassword: string) {

@@ -1,49 +1,37 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { getFetch, httpBatchLink, loggerLink } from "@trpc/client";
 import { trpc } from "./trpc";
 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import Home from "./screens/home";
+import Auth from "./screens/auth"
+import Support from "./screens/support";
+import { UserContextProvider } from "./contexts/UserContext";
+import Profile from "./screens/profile";
+import POS from "./screens/pos";
+
+
 function AppContent() {
-  const createRestaurant = trpc.createRestaurant.useMutation();
-
-
-  const createRestaurantController = () => {
-    createRestaurant.mutate({
-      name: "Pearl Continental",
-      username: "pearlcontinental2",
-      description: "Hey"
-    })
-  }
-  const registerUser = trpc.loginUser.useMutation()
-
-  const rest = trpc.getRestaurant.useQuery({
-    id: "64134e1b75b9fc446058b828"
-  })
-
-  const user = trpc.getMe.useQuery()
-
-  useEffect(() => {
-    
-    // registerUser.mutate({
-    //   name: "Nabeegh Ahmed",
-    //   email: "nabeegh08@gmail.com",
-    //   password: "12345678@Nn",
-    //   passwordConfirm: "12345678@Nn",
-    //   photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlysovRqSseA4uUGlio_vESy9xFc5OS7jXOva3NlE&s"
-    // })
-  }, [])
 
   return (
-    <div>
-      { createRestaurant.isLoading && <p>Loading...</p> }
-      { createRestaurant.error && <p>{createRestaurant.error.message}</p> }
-      { createRestaurant.isSuccess && createRestaurant.data.data.restaurant.name }
-      {/* { JSON.stringify(rest.data?.data.restaurant) } */}
-      { user.error?.message }
-      { JSON.stringify(user.data?.data.user) }
-      <button onClick={createRestaurantController}>Create Restaurant</button>
-    </div>
+    <UserContextProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/auth" element={<Auth/>} />
+          <Route path="/support" element={<Support/>} />
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/pos" element={<POS />} />
+        </Routes>
+      </Router>
+    </UserContextProvider>
   )
 
 }
@@ -81,7 +69,7 @@ function App() {
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <AppContent />
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </trpc.Provider>
   );

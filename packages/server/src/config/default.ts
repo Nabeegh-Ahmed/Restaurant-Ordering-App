@@ -13,7 +13,7 @@ const customConfig: {
   refreshTokenPublicKey: string;
 } = {
   port: 8000,
-  accessTokenExpiresIn: 15,
+  accessTokenExpiresIn: 30,
   refreshTokenExpiresIn: 60,
   origin: 'http://localhost:3000',
 

@@ -11,6 +11,8 @@ export const excludedFields = ['password'];
 
 // CreateUser service
 export const createUser = async (input: Partial<User>) => {
+
+  
   const user = await userModel.create(input);
   return omit(user.toJSON(), excludedFields);
 };

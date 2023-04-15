@@ -3,6 +3,7 @@ import { Context } from '../app';
 
 export const getMeHandler = ({ ctx }: { ctx: Context }) => {
   try {
+    
     const user = ctx.user;
     return {
       status: 'success',

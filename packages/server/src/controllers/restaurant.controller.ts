@@ -14,7 +14,6 @@ export const createRestaurantHandler = async ({ input, ctx }: { ctx: Context, in
         }
         const res = await createRestaurant({
             name: input.name,
-            username: input.username,
             description: input.description,
             owner: user._id
         })

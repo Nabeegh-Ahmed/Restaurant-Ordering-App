@@ -30,12 +30,13 @@ export const deserializeUser = async ({
       return notAuthenticated;
     }
 
+
     // Validate Access Token
     const decoded = verifyJwt<{ sub: string }>(
       access_token,
       'accessTokenPublicKey'
     );
-
+    
     if (!decoded) {
       return notAuthenticated;
     }
@@ -48,8 +49,8 @@ export const deserializeUser = async ({
     }
 
     // Check if user still exist
-    const user = await findUserById(JSON.parse(session)._id);
-
+    const user = await findUserById(JSON.parse(session)._doc._id);
+    redisClient.publish('user', JSON.stringify(user));
     if (!user) {
       return notAuthenticated;
     }
