@@ -39,7 +39,7 @@ const Home = () => {
             {
                 isLoading ? <Loader /> : isError ? <p>{error.message!}</p> : (
                     blogs.data.blogs.map(blog => {
-                        return <div className="w-1/3"><BlogCard title={blog.title} content={blog.content} photo={blog.photo} author={""} /></div>
+                        return <div className="w-1/3"><BlogCard title={blog.title} content={blog.content} photo={blog.photo} author={""} id={blog._id.toString()}/></div>
                     })
                 )
             }
