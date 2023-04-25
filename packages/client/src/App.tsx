@@ -16,6 +16,7 @@ import Support from "./screens/support";
 import { UserContextProvider } from "./contexts/UserContext";
 import Profile from "./screens/profile";
 import POS from "./screens/pos";
+import Team from "./screens/team";
 
 
 function AppContent() {
@@ -29,6 +30,7 @@ function AppContent() {
           <Route path="/support" element={<Support/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/pos" element={<POS />} />
+          <Route path="/team" element={<Team />} />
         </Routes>
       </Router>
     </UserContextProvider>

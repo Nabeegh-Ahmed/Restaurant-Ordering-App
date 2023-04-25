@@ -23,8 +23,10 @@ const POS = () => {
 
 const OrderItem = () => {
     return (
-        <div className="w-full rounded-md bg-sub-text bg-opacity-10 flex ">
-            <div className="bg-white rounded-3xl p-2 text-secondary">1</div>
+        <div className="w-full rounded-md bg-sub-text bg-opacity-10 flex p-2 items-center space-x-2">
+            <div className="bg-white !rounded-full w-[25px] text-center text-secondary">1</div>
+            <div>Sting 0.5L Red</div>
+            <div className="text-subtext">x4</div>
         </div>
     )
 }

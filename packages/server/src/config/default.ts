@@ -13,8 +13,8 @@ const customConfig: {
   refreshTokenPublicKey: string;
 } = {
   port: 8000,
-  accessTokenExpiresIn: 30,
-  refreshTokenExpiresIn: 60,
+  accessTokenExpiresIn: 60 * 60 * 24 * 30,
+  refreshTokenExpiresIn: 60 * 60 * 24 * 30,
   origin: 'http://localhost:3000',
 
   dbUri: process.env.MONGODB_URI as string,

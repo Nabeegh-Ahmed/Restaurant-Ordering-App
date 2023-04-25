@@ -21,8 +21,9 @@ export const t = initTRPC.context<Context>().create();
 import { authRouter } from "./routers/authRouter";
 import { userRouter } from "./routers/userRouter";
 import { restaurantRouter } from "./routers/restaurantRouter";
+import { blogRouter } from "./routers/blog.router";
 
-const appRouter = t.mergeRouters(authRouter, userRouter, restaurantRouter);
+const appRouter = t.mergeRouters(authRouter, userRouter, restaurantRouter, blogRouter);
 export type AppRouter = typeof appRouter;
 
 const app = express();

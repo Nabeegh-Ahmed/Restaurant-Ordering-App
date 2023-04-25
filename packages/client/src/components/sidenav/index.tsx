@@ -1,4 +1,4 @@
-import { BsMenuButtonWideFill, BsShop } from "react-icons/bs";
+import { BsMenuButtonWideFill } from "react-icons/bs";
 
 import React from "react";
 import { Link } from "react-router-dom";

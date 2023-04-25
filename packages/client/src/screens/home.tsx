@@ -4,14 +4,19 @@ import { UserContext } from "../contexts/UserContext"
 import ProductCard from "../components/productCard"
 
 import { AiFillRightCircle } from "react-icons/ai"
+import { trpc } from "../trpc"
+import Loader from "../components/loader"
+import BlogCard from "../components/blogCard"
 
 const Home = () => {
     const { state } = React.useContext(UserContext)
+    const { isLoading, isError, data: blogs, error } = trpc.getBlogs.useQuery()
+    console.log(blogs)
     return (
         <MainLayout>
             <div className="lg:flex ">
                 <div className="lg:w-3/4 ">
-                    {state.isAuth && <p className="text-2xl font-medium">Hello, {state.user?.email.split("@")[0]}</p>}
+                    {state.isAuth && <p className="text-2xl font-medium mt-3">Hello, {state.user?.email.split("@")[0]}</p>}
                     <div className="lg:flex flex-wrap">
                         <div className="lg:w-[33%]"><ProductCard /></div>
                         <div className="lg:w-[33%]"><ProductCard /></div>
@@ -29,6 +34,15 @@ const Home = () => {
                     <TopRestaurantCard />
                 </div>
             </div>
+
+            <h1 className="text-3xl my-4 font-bold">Learn more about FiFi</h1>
+            {
+                isLoading ? <Loader /> : isError ? <p>{error.message!}</p> : (
+                    blogs.data.blogs.map(blog => {
+                        return <div className="w-1/3"><BlogCard title={blog.title} content={blog.content} photo={blog.photo} author={""} /></div>
+                    })
+                )
+            }
 
         </MainLayout>
     )
